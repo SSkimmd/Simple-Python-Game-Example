@@ -2,7 +2,7 @@ import requests
 import json
 import os
 import random
-
+import net
 
 class Item(dict):
     def __init__(self, name, description):
@@ -76,6 +76,8 @@ def random_item(min: int, max: int):
 def open_box(type: str):
     if type == "c":
         item = random_item(0, 4)
+
+        net.add_item(user.username, item)
     if type == "u":
         item = random_item(0, 4)
     if type == "r":
@@ -83,3 +85,5 @@ def open_box(type: str):
     
     print(item['name'])
     return item
+
+user = None

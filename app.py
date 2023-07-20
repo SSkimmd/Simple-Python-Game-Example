@@ -6,8 +6,26 @@ def start():
     os.system("cls")
 
     cmd = util.Command([util.Option("\n|L| Login", "l", scene_login), 
-                        util.Option("|C| Create Account", "c")
+                        util.Option("|C| Create Account", "c", scene_create)
     ]).get()
+
+
+def scene_create():
+    global user
+
+    cmd = util.Command([util.Option("\n|Enter Username|")])
+
+    cmd.register_oninput(net.create)
+    user = cmd.get()
+    util.user = user
+
+    if user is not None:
+        print(f"\n|Successfully Created Account: {user.username}")
+        input("|Enter to continue: ")
+        scene_main()
+    else:
+        scene_create()
+
 
 def scene_login():
     global user
@@ -16,6 +34,7 @@ def scene_login():
 
     cmd.register_oninput(net.login)
     user = cmd.get()
+    util.user = user
 
     if user is not None:
         print(f"\n|Successfully Logged In: {user.username}")
